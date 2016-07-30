@@ -1,6 +1,6 @@
 Working with OpenCV:
 
-Main code is " imageTransforms.py ". 
+Main code is " videoTransforms.py ". 
 The file contains the functions for Similarity, Affine and Perspective transform.
 
 The code takes three arguments as follows:
