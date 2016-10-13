@@ -74,7 +74,7 @@ class video:
     def getNeighbours(self,arrayX,arrayY, height, width):
         neighbourX = [(arrayX-1),arrayX,(arrayX+1),(arrayX-1),(arrayX+1),(arrayX-1),arrayX,(arrayX+1)]
         neighbourY = [(arrayY-1),(arrayY-1),(arrayY-1),arrayY,arrayY,(arrayY+1),(arrayY+1),(arrayY+1)]
-##        print "neighbourX , neighburY is: ",neighbourX, neighbourY
+##      print "neighbourX , neighburY is: ",neighbourX, neighbourY
         finalX = []
         finalY = []
         for i in range(0,len(neighbourX)):
@@ -99,7 +99,7 @@ class video:
         arrayY=p%w
         nX, nY = self.getNeighbours(arrayX, arrayY, h, w)
         values = self.findValues(nX, nY, w)
-##        print "values are: ",values
+##      print "values are: ",values
         randomPixel = int(values[random.randint(0,len(values)-1)])
         return randomPixel
         
@@ -113,22 +113,22 @@ class video:
 
         i=0
         while success:
-##            success,frame = cap.read(cv.CV_IMWRITE_JPEG_QUALITY)
+##          success,frame = cap.read(cv.CV_IMWRITE_JPEG_QUALITY)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             gray = cv2.GaussianBlur(gray, (21, 21), 0)
             height,width = gray.shape[:2]
             tempArray = np.reshape(gray,(height*width)).T
             segmentationMap = np.copy(tempArray)*0
             for p in range(0,len(bigSampleArray)):
-##                print "Value of p is: ",p
+##              print "Value of p is: ",p
                 count = index = distance = 0
 
                 while((count < self.requiredMatches) and (index < self.numberOfSamples)):
                     distance = np.linalg.norm(tempArray[p]-samples[p][index])
-##                    print "Euclidean distance is: ",distance
+##                  print "Euclidean distance is: ",distance
                     if (distance < self.distanceThreshold):
                         count += 1
-##                        print "count reached" ,count
+##                      print "count reached" ,count
                     index += 1
 
                 if(count<self.requiredMatches):
@@ -140,11 +140,11 @@ class video:
                         randomNumber= random.randint(0,self.numberOfSamples-1)
                         samples[p][randomNumber] = tempArray[p]
                     randomNumber = random.randint(0, self.subsamplingFactor-1)
-##                    print "Random number detected is: ",randomNumber
+##                  print "Random number detected is: ",randomNumber
                     if(randomNumber==0):
-##                        print "Enters randomNumber section"
+##                      print "Enters randomNumber section"
                         q = self.getPixelLocation(p,height,width)
-##                        print "Returned q value is: ",q
+##                      print "Returned q value is: ",q
                         randomNumber = random.randint(0,self.numberOfSamples-1)
                         samples[q][randomNumber] = tempArray[p]
 		#if the `q` key is pressed, break from the loop
@@ -172,90 +172,7 @@ class video:
         
 
 if __name__ == "__main__": 
-    path_file='movie.ogv'
+    path_file='movie_cars.ogv'
     v = video(path_file)
 
        
-'''
-
-            
-##            print len(cnts)
-	# loop over the contours
-            
-		# compute the bounding box for the contour, draw it on the frame,
-		# and update the text
-##		if(len(c) > 0):
-##                    m= np.mean(c[0],axis=0)
-##                    measuredTrack[count-1,:]=m[0]
-##                    plt.plot(m[0,0],m[0,1],'ob')
-                
-##                cv2.drawContours(frame, c, -1, (0,255,0), 3)
-    def framing(self,path):
-        global newpath
-        cap = cv2.VideoCapture(path)
-        success,frame=cap.read(cv.CV_IMWRITE_JPEG_QUALITY)
-              
-        count = 1;
-        
-        firstFrame = None
-# loop over the frames of the video
-        while success:
-	# resize the frame, convert it to grayscale, and blur it
-##            frame = imutils.resize(frame, width=500)
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            gray = cv2.GaussianBlur(gray, (51, 51), 0)
-
-##            print newpath, len(os.listdir(newpath))
-##            print len([name for name in os.listdir(newpath) if os.path.isfile(name)])
-
-	# if the first frame is None, initialize it
-            if firstFrame is None:
-                   firstFrame = gray
-                   continue
-
-	# compute the absolute difference between the current frame and
-	# first frame
-            frameDelta = cv2.absdiff(firstFrame, gray)
-            
-            thresh = cv2.threshold(frameDelta, 25, 255, cv2.THRESH_BINARY)[1]
-
-	# dilate the thresholded image to fill in holes, then find contours
-	# on thresholded image
-            thresh = cv2.dilate(thresh, None, iterations=2)
-            (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                       cv2.CHAIN_APPROX_SIMPLE)
-##            print len(cnts)
-	# loop over the contours
-            for c in cnts:
-		# compute the bounding box for the contour, draw it on the frame,
-		# and update the text
-##		if(len(c) > 0):
-##                    m= np.mean(c[0],axis=0)
-##                    measuredTrack[count-1,:]=m[0]
-##                    plt.plot(m[0,0],m[0,1],'ob')
-                (x, y, w, h) = cv2.boundingRect(c)
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-##                cv2.drawContours(frame, c, -1, (0,255,0), 3)
-                 
-	# show the frame and record if the user presses a key
-            cv2.imshow("Feed", frame)
-            cv2.imshow("Thresh", thresh)
-##            cv2.imshow("Frame Delta", frameDelta)
-            
-
-	# 
-                
-            cv2.imwrite("Frames/%d.jpg" % count, frame)           # save frame as JPEG file
-            count += 1
-            success,frame = cap.read(cv.CV_IMWRITE_JPEG_QUALITY)
-
-        array=self.sort_files()
-        print array
-        cv2.destroyAllWindows()
-        cap.release()
-        plt.show()
-'''
-
-
- 
-
