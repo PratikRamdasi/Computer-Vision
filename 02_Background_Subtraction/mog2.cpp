@@ -23,8 +23,8 @@ using namespace cv;
 
 Mat filter_image(Mat& img)
 {
-	int morph_size1 = 1;
-	int morph_size2 = 1;
+    int morph_size1 = 1;
+    int morph_size2 = 1;
     Mat kernel = cv::getStructuringElement(MORPH_RECT, Size(2*morph_size1 +1, 2*morph_size2 +1));
     Mat filtered;  
      
@@ -48,8 +48,8 @@ Rect compressROI(Mat frm, Rect boundingBox, int padding) {
 
 int main()
 {
-	VideoCapture cap;
-    cap.open("/home/pratikramdasi/CoachCam/videos/8player/v1.mp4");
+    VideoCapture cap;
+    cap.open(0); // input video path
     if ( !cap.isOpened() )
         return -1;
         
@@ -69,7 +69,7 @@ int main()
     while(1)
     {
 		
-		bool bSuccess = cap.read(frame); // read a new frame from video
+	bool bSuccess = cap.read(frame); // read a new frame from video
         if (!bSuccess) // if not success, break loop
         {
             cout << "Cannot read a frame from video file" << endl;
@@ -103,14 +103,14 @@ int main()
         // define horizontal line parameters  
 		             
         Point mid_left, mid_right;
-		mid_left.y = s.height/2;
-		mid_left.x = 0;
-		mid_right.x = s.width;
-		mid_right.y = s.height/2;
-        
-        
-		// find contours
-		findContours (fgimg, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
+	mid_left.y = s.height/2;
+	mid_left.x = 0;
+	mid_right.x = s.width;
+	mid_right.y = s.height/2;
+
+
+	// find contours
+	findContours (fgimg, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
 
         vector<vector<Point> > contours_poly( contours.size() );
         vector<Rect> boundRect( contours.size() );
