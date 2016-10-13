@@ -133,9 +133,9 @@ Rect compressROI(Mat frm, Rect boundingBox, int padding) {
 	
 int main()
 {
-	// get the input video
-	VideoCapture cap;
-    cap.open("/home/pratikramdasi/CoachCam/videos/6player/v3.mp4");
+    // get the input video
+    VideoCapture cap;
+    cap.open(0); // input video path
     if ( !cap.isOpened() )
         return -1;
 
@@ -144,14 +144,14 @@ int main()
     int h = (int)cap.get(CV_CAP_PROP_FRAME_HEIGHT);  
     int ct = 0;
 
-	stringstream ss;
-	string folderName = "cropped";
-	string folderCreateCommand = "mkdir " + folderName;
-	system(folderCreateCommand.c_str());
+    stringstream ss;
+    string folderName = "cropped";
+    string folderCreateCommand = "mkdir " + folderName;
+    system(folderCreateCommand.c_str());
 					
-	vector < vector < Point > >contours;
-	vector < Point > points;
-	vector<Vec4i> hierarchy;
+    vector < vector < Point > >contours;
+    vector < Point > points;
+    vector<Vec4i> hierarchy;
 		
     Vibe vibe(w,h);
     
