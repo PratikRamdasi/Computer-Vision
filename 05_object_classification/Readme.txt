@@ -1,4 +1,4 @@
-Objectiive:
+Objective:
 -----------
 Identify types of moving objects in a video to track and classify them based on their type. 
 We have selected three catagories, 'Person', 'People(group of persons)' and 'Car'.
